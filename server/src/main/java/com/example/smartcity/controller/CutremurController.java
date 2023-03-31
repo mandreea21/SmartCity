@@ -4,6 +4,7 @@ import com.example.smartcity.dto.CutremurDto;
 import com.example.smartcity.model.Cutremur;
 import com.example.smartcity.service.CutremurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,9 @@ public class CutremurController {
     @ResponseBody
     @GetMapping("/cutremur")
     public ResponseEntity<CutremurDto> getLastCutremur() {
-        return ResponseEntity.ok().body(cutremurService.getLastCutremur());
+        HttpHeaders myHeaders = new HttpHeaders();
+        myHeaders.add("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.ok().headers(myHeaders).body(cutremurService.getLastCutremur());
     }
 
     @ResponseBody

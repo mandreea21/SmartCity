@@ -1,34 +1,24 @@
 import logo from "./logo.svg";
 import "./App.css";
+import React, { useState, useEffect } from "react";
+import { EarthquakeInfo } from "./model/earthquake.js";
+import { earthquake } from "./service/eartquakesFetch.js";
 
-class EarthquakeInfo {
-  constructor(id, adancime, an, luna, zi, ora, minute, magnitudine, lat, long) {
-    this.id = id;
-    this.depth = adancime;
-    this.year = an;
-    this.month = luna;
-    this.day = zi;
-    this.hour = ora;
-    this.minutes = minute;
-    this.magnitude = magnitudine;
-    this.lat = lat;
-    this.long = long;
-  }
-  show() {
-    return this;
-  }
-}
+let earthquakesCount = 1;
 
-const products = [
-  new EarthquakeInfo(1, 2, 3, 4, 5, 6, 3, 2, 9, 11),
-  new EarthquakeInfo(2, 3, 4, 5, 6, 7, 8, 6.9, 10, 11),
-];
-products.push(new EarthquakeInfo(3, 2, 3, 4, 5, 6, 7, 4, 9, 10));
+const GetEarthquakes = () => {
+  const [earthquakes, setEarthquakes] = useState([]);
+  useEffect(() => {
+    setInterval(async () => {
+      let tmpEarthquake = await earthquake();
+      setEarthquakes(earthquakes => [...earthquakes, new EarthquakeInfo(tmpEarthquake.adancime, tmpEarthquake.anCutremur, tmpEarthquake.lunaCutremur, tmpEarthquake.ziuaCutremur, tmpEarthquake.ora, tmpEarthquake.minut, tmpEarthquake.magnitudine, tmpEarthquake.latitudine, tmpEarthquake.longitudine)])
+    }, 3000);
+    console.log(earthquakes);
+  });
 
-export default function ShoppingList() {
-  const listItems = products.map((product) => (
+  return earthquakes.map((earthquake) => (
     <div
-      key={product.id}
+      key={earthquakesCount++}
       style={{
         color: "beige",
         background: "rgb(67, 89, 111)",
@@ -42,28 +32,28 @@ export default function ShoppingList() {
         style={{
           fontSize: 25,
           color:
-            product.magnitude < 3
+            earthquake.magnitude < 3
               ? "rgb(85,208,0)"
-              : product.magnitude < 5
-              ? "rgb(211,208,0)"
-              : product.magnitude < 7
-              ? "rgb(255,99,0)"
-              : "rgb(255,0,0)",
+              : earthquake.magnitude < 5
+                ? "rgb(211,208,0)"
+                : earthquake.magnitude < 7
+                  ? "rgb(255,99,0)"
+                  : "rgb(255,0,0)",
         }}
       >
-        Depth: {product.depth} Magnitude: {product.magnitude}
+        Depth: {earthquake.depth} Magnitude: {earthquake.magnitude}
       </section>
       <section>
-        Location in Latitude: {product.lat} Longitude: {product.long}
+        Location in Latitude: {earthquake.lat} Longitude: {earthquake.long}
       </section>
       <section>
-        Date: {product.day}.{product.month}.{product.year}
+        Date: {earthquake.day}.{earthquake.month}.{earthquake.year}
       </section>
       <section>
-        Time: {product.hour}:{product.minutes}
+        Time: {earthquake.hour}:{earthquake.minutes}
       </section>
     </div>
   ));
+};
 
-  return <section>{listItems}</section>;
-}
+export default GetEarthquakes;
