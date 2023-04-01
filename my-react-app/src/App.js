@@ -9,11 +9,12 @@ let earthquakesCount = 1;
 const GetEarthquakes = () => {
   const [earthquakes, setEarthquakes] = useState([]);
   useEffect(() => {
-    setInterval(async () => {
+    let interval = setInterval(async () => {
       let tmpEarthquake = await earthquake();
       setEarthquakes(earthquakes => [...earthquakes, new EarthquakeInfo(tmpEarthquake.adancime, tmpEarthquake.anCutremur, tmpEarthquake.lunaCutremur, tmpEarthquake.ziuaCutremur, tmpEarthquake.ora, tmpEarthquake.minut, tmpEarthquake.magnitudine, tmpEarthquake.latitudine, tmpEarthquake.longitudine)])
-    }, 3000);
+    }, 10000);
     console.log(earthquakes);
+    return () => clearInterval(interval);
   });
 
   return earthquakes.map((earthquake) => (

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CutremurRepository extends JpaRepository<Cutremur, Long> {
     @Query(value =
-            "SELECT * FROM cutremur ORDER BY an_cutremur DESC, luna_cutremur DESC, ziua_cutremur DESC, ora DESC, minut DESC LIMIT 1",
+            "SELECT * FROM cutremur ORDER BY an_cutremur ASC, luna_cutremur ASC, ziua_cutremur ASC, ora ASC, minut ASC LIMIT 1",
             nativeQuery = true)
     Cutremur findFirstByOrderByDataDesc();
 }

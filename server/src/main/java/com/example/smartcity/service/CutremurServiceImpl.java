@@ -20,13 +20,14 @@ public class CutremurServiceImpl implements CutremurService {
     @Override
     public CutremurDto getLastCutremur() {
         Cutremur cutremur = cutremurRepository.findFirstByOrderByDataDesc();
+        cutremurRepository.deleteById(cutremur.getCutremurID());
         CutremurDto cutremurDto = CutremurMapper.cutremurToCutremurDto(cutremur);
         return cutremurDto;
     }
 
     @Override
     public List<CutremurDto> getAllCutremure() {
-        List<Cutremur> cutremure = (List<Cutremur>) cutremurRepository.findAll();
+        List<Cutremur> cutremure = cutremurRepository.findAll();
         List<CutremurDto> cutremureDto = new ArrayList<>();
         for (Cutremur cutremur : cutremure) {
             cutremureDto.add(CutremurMapper.cutremurToCutremurDto(cutremur));
