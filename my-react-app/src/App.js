@@ -19,11 +19,37 @@ class EarthquakeInfo {
   }
 }
 
+<<<<<<< Updated upstream
 const products = [
   new EarthquakeInfo(1, 2, 3, 4, 5, 6, 3, 2, 9, 11),
   new EarthquakeInfo(2, 3, 4, 5, 6, 7, 8, 6.9, 10, 11),
 ];
 products.push(new EarthquakeInfo(3, 2, 3, 4, 5, 6, 7, 4, 9, 10));
+=======
+const GetEarthquakes = () => {
+  const [earthquakes, setEarthquakes] = useState([]);
+  useEffect(() => {
+    let interval = setInterval(async () => {
+      let tmpEarthquake = await earthquake();
+      setEarthquakes((earthquakes) => [
+        new EarthquakeInfo(
+          tmpEarthquake.adancime,
+          tmpEarthquake.anCutremur,
+          tmpEarthquake.lunaCutremur,
+          tmpEarthquake.ziuaCutremur,
+          tmpEarthquake.ora,
+          tmpEarthquake.minut,
+          tmpEarthquake.magnitudine,
+          tmpEarthquake.latitudine,
+          tmpEarthquake.longitudine
+        ),
+        ...earthquakes,
+      ]);
+    }, 10000);
+    console.log(earthquakes);
+    return () => clearInterval(interval);
+  });
+>>>>>>> Stashed changes
 
 export default function ShoppingList() {
   const listItems = products.map((product) => (
@@ -44,9 +70,15 @@ export default function ShoppingList() {
           color:
             product.magnitude < 3
               ? "rgb(85,208,0)"
+<<<<<<< Updated upstream
               : product.magnitude < 5
               ? "rgb(211,208,0)"
               : product.magnitude < 7
+=======
+              : earthquake.magnitude < 5
+              ? "rgb(211,208,0)"
+              : earthquake.magnitude < 7
+>>>>>>> Stashed changes
               ? "rgb(255,99,0)"
               : "rgb(255,0,0)",
         }}
@@ -65,5 +97,9 @@ export default function ShoppingList() {
     </div>
   ));
 
+<<<<<<< Updated upstream
   return <section>{listItems}</section>;
 }
+=======
+export default GetEarthquakes;
+>>>>>>> Stashed changes
